@@ -1,0 +1,11 @@
+{
+  "name": "islamic-engagement-invitation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Islamic engagement invitation website: envelope reveal, countdown, venue directions, WhatsApp sharing and calendar download. Static site with no build step.",
+  "scripts": {
+    "dev": "npx --yes serve@14 -l 3000 .",
+    "start": "npm run dev"
+  },
+  "license": "UNLICENSED"
+}
