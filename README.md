@@ -17,7 +17,6 @@ It has no build step and no server code, so it runs on any static host, includin
 ## Folder structure
 
 ```
-islamic-engagement-invitation/
 ├── index.html                  Page structure and content
 ├── css/
 │   └── styles.css              All styling, layout, envelope and animations
@@ -86,7 +85,6 @@ Every later push to the repository redeploys automatically.
 
 ```bash
 npm install -g vercel
-cd islamic-engagement-invitation
 vercel            # first time: answer the prompts; use the defaults
 vercel --prod     # publish to the production address
 ```
