@@ -65,6 +65,9 @@ function openEnvelope(){
   envBtn.classList.add("opening");
   envBtn.disabled = true;
 
+  // Start background audio on user interaction (satisfies mobile gesture rules)
+  startAudio();
+
   // Wait for the seal, flap and card animations to finish before fading the overlay.
   const delay = reduceMotion ? 0 : 1650;
   setTimeout(() => {
@@ -150,31 +153,57 @@ $("calBtn").addEventListener("click", () => {
   setTimeout(() => URL.revokeObjectURL(url), 4000);
 });
 
-/* ---------- Nasheed (manual play and pause only, never autoplay) ---------- */
-if (CONFIG.nasheedUrl){
-  const btn = $("nasheedBtn");
-  const audio = $("nasheedAudio");
-  audio.src = CONFIG.nasheedUrl;
-  btn.hidden = false;
-  const setState = (playing) => {
-    btn.setAttribute("aria-pressed", String(playing));
-    btn.setAttribute("aria-label", playing ? "Pause nasheed" : "Play nasheed");
-    $("icoPlay").hidden = playing;
-    $("icoPause").hidden = !playing;
-  };
-  btn.addEventListener("click", () => {
-    if (audio.paused){
-      audio.play().then(() => setState(true)).catch(() => setState(false));
+/* ---------- Background Audio (starts on envelope tap; visitor can pause/resume) ---------- */
+const musicBtn = $("musicBtn");
+const bgAudio = $("bgAudio");
+
+function setMusicState(playing){
+  if (!musicBtn) return;
+  musicBtn.classList.toggle("is-playing", playing);
+  musicBtn.setAttribute("aria-pressed", String(playing));
+  musicBtn.setAttribute("aria-label", playing ? "Pause background music" : "Play background music");
+  const playIcon = $("badgePlay");
+  const pauseIcon = $("badgePause");
+  if (playIcon) playIcon.hidden = playing;
+  if (pauseIcon) pauseIcon.hidden = !playing;
+}
+
+function startAudio(){
+  if (!bgAudio) return;
+  bgAudio.volume = 0.35; // Comfortable, low initial volume
+  const playPromise = bgAudio.play();
+  if (playPromise !== undefined){
+    playPromise.then(() => {
+      setMusicState(true);
+    }).catch((err) => {
+      console.warn("Autoplay restriction encountered; visitor can play via button:", err);
+      setMusicState(false);
+    });
+  }
+  if (musicBtn) musicBtn.hidden = false;
+}
+
+if (musicBtn && bgAudio){
+  musicBtn.addEventListener("click", () => {
+    if (bgAudio.paused){
+      bgAudio.play().then(() => setMusicState(true)).catch((err) => {
+        console.warn("Audio play failed:", err);
+        setMusicState(false);
+      });
     } else {
-      audio.pause();
-      setState(false);
+      bgAudio.pause();
+      setMusicState(false);
     }
   });
-  // Pause when the visitor leaves the tab.
+
+  bgAudio.addEventListener("play", () => setMusicState(true));
+  bgAudio.addEventListener("pause", () => setMusicState(false));
+
+  // Pause when the visitor leaves the tab to save battery and data
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden && !audio.paused){
-      audio.pause();
-      setState(false);
+    if (document.hidden && !bgAudio.paused){
+      bgAudio.pause();
+      setMusicState(false);
     }
   });
 }

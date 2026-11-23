@@ -11,7 +11,7 @@ It has no build step and no server code, so it runs on any static host, includin
 - Venue card with **Get directions** and map card, both opening the confirmed Google Maps search for Maharani Lawns in a new tab
 - **Share on WhatsApp**, which sends the names, date, time, venue and the current page address
 - **Add to calendar**, which downloads a single `.ics` event
-- Optional nasheed play/pause control (hidden until an audio file is set; never autoplays)
+- Background audio recording playing upon opening the envelope with an elegant floating burgundy-and-gold play/pause control and rotating music icon
 - Floral background with parallax scrolling and gentle floating ornaments; reduced-motion settings are respected
 
 ## Folder structure
@@ -23,6 +23,7 @@ It has no build step and no server code, so it runs on any static host, includin
 ├── js/
 │   └── main.js                 Behaviour and the CONFIG block (links and audio)
 ├── assets/
+│   ├── audio/                  Background audio recording (.mp4 / .mpeg)
 │   ├── images/
 │   │   ├── floral-background.jpg   Full floral artwork (top, middle and bottom parts)
 │   │   └── floral-band.jpg         Repeating frame band for the middle of the page

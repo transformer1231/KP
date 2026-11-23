@@ -197,12 +197,26 @@
 
 </main>
 
-<!-- Nasheed control: hidden until an audio link is configured -->
-<button class="nasheed" id="nasheedBtn" type="button" aria-pressed="false" aria-label="Play nasheed" hidden>
-  <svg id="icoPlay" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 001.5.86l10.4-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z"/></svg>
-  <svg id="icoPause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+<!-- Floating background audio control -->
+<button class="music-btn" id="musicBtn" type="button" aria-pressed="false" aria-label="Play background music" hidden>
+  <span class="music-disc" aria-hidden="true">
+    <svg class="music-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M21 3L9 5.5v11.75A3.25 3.25 0 006.5 16 3.5 3.5 0 003 19.5 3.5 3.5 0 006.5 23a3.5 3.5 0 003.5-3.5V8.8l9-1.87v7.32A3.25 3.25 0 0016.5 13a3.5 3.5 0 00-3.5 3.5 3.5 3.5 0 003.5 3.5 3.5 3.5 0 003.5-3.5V3z"/>
+    </svg>
+  </span>
+  <span class="music-badge" aria-hidden="true">
+    <svg id="badgePlay" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5.5v13a1 1 0 001.5.86l10.4-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z"/>
+    </svg>
+    <svg id="badgePause" viewBox="0 0 24 24" fill="currentColor" hidden>
+      <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>
+    </svg>
+  </span>
 </button>
-<audio id="nasheedAudio" preload="none" loop></audio>
+<audio id="bgAudio" preload="auto" loop playsinline>
+  <source src="assets/audio/WhatsApp_Audio_2026-11-23_at_2.00.43_PM.mp4" type="audio/mp4">
+  <source src="assets/audio/WhatsApp_Audio_2026-11-23_at_2.00.43_PM.mpeg" type="audio/mpeg">
+</audio>
 
 <script src="js/main.js" defer></script>
 </body>

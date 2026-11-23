@@ -482,20 +482,40 @@ section > :not(.flora):not(.drift){position:relative;z-index:1}
   .foot{padding-bottom:200px}
 }
 
-/* ---------- Nasheed control ---------- */
-.nasheed{
-  position:fixed;z-index:30;
-  right:max(14px,env(safe-area-inset-right,0px));
-  bottom:max(14px,env(safe-area-inset-bottom,0px));
-  width:58px;height:58px;border-radius:50%;
+/* ---------- Background music control ---------- */
+.music-btn{
+  position:fixed;z-index:40;
+  right:max(16px,env(safe-area-inset-right,16px));
+  bottom:max(16px,env(safe-area-inset-bottom,16px));
+  width:46px;height:46px;border-radius:50%;
   border:1.5px solid var(--gold-soft);
-  background:radial-gradient(circle at 35% 30%,#8a2146,var(--wine));
+  background:radial-gradient(circle at 35% 30%,#8a2146 0%,var(--wine) 75%);
   color:var(--gold-soft);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;touch-action:manipulation;
-  box-shadow:0 6px 18px rgba(74,11,34,.35);
+  box-shadow:0 4px 16px rgba(74,11,34,.35),inset 0 0 0 1px rgba(253,246,243,.2);
+  transition:transform .2s ease,box-shadow .2s ease,opacity .3s ease;
+  padding:0;
 }
-.nasheed svg{width:22px;height:22px}
+.music-btn:hover{transform:scale(1.06);box-shadow:0 6px 20px rgba(74,11,34,.45)}
+.music-btn:active{transform:scale(.94)}
+.music-disc{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;height:100%;
+  transform-origin:center center;
+}
+.music-icon{width:20px;height:20px}
+.music-btn.is-playing .music-disc{animation:rotateMusic 6s linear infinite}
+@keyframes rotateMusic{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.music-badge{
+  position:absolute;right:-2px;bottom:-2px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--gold);color:var(--wine);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+  border:1px solid #fffafb;
+}
+.music-badge svg{width:8px;height:8px}
 
 /* ---------- Envelope and page sizing by screen size ----------
    Mobile: portrait card that fills most of the width.
@@ -529,4 +549,5 @@ section > :not(.flora):not(.drift){position:relative;z-index:1}
   .spk{opacity:0}
   .drift.float .fw{animation:none}
   .env-letter{transition:none}
+  .music-btn.is-playing .music-disc{animation:none}
 }
